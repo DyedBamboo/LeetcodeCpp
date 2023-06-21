@@ -1,0 +1,16 @@
+{
+    "files.associations": {
+        "*.cjson": "jsonc",
+        "*.wxss": "css",
+        "*.wxs": "javascript",
+        "*.cpp": "cpp",
+        "*.hpp": "cpp",
+        "*.h": "cpp",
+        "*.c": "c",
+        "*.py": "python",
+        "*.csv": "plaintext",
+        "*.proto": "cpp",
+        "*.m": "matlab",
+        "iostream": "cpp"
+    }
+}
