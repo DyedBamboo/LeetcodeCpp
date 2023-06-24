@@ -11,20 +11,37 @@
 
 using namespace std;
 
-string reverseWords(string s) {
-    string res;
-    int i = s.size() - 1, j = i;
-    while (i >= 0) {
-        while (i >= 0 && s[i] == ' ') i--;
-        j = i;
-        if (i < 0) break;
-        while (i >= 0 && s[i] != ' ') i--;
-        if (res.size() == 0)
-            res = s.substr(i + 1, j - i);
-        else
-            res = res + " " + s.substr(i + 1, j - i);
+void reverse(string& s, int start, int end) {
+    for (int i = start, j = end; i < j; ++i, --j) {
+        swap(s[i], s[j]);
     }
-    return res;
+}
+
+void removeExtraSpaces(string& s) {
+    int slow = 0;
+    for (int i = 0; i < s.size(); ++i) {
+        if (s[i] != ' ') {
+            if (slow != 0)
+                s[slow++] = ' ';
+        }
+        while (i < s.size() && s[i] != ' ') {
+            s[slow++] = s[i++];
+        }
+    }
+    s.resize(slow);
+}
+
+string reverseWords(string s) {
+    removeExtraSpaces(s);
+    reverse(s, 0, s.size() - 1);
+    int start = 0;
+    for (int i = 0; i <= s.size(); ++i) {
+        if (i == s.size() || s[i] == ' ') {
+            reverse(s, start, i - 1);
+            start = i + 1;
+        }
+    }
+    return s;
 }
 
 int main() {
