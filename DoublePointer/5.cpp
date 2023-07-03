@@ -33,7 +33,7 @@ LinkNode* reverseList(LinkNode* head) {
 int main() {
     LinkNode* head = new LinkNode(1);
     LinkNode* cur = head;
-    for(int i = 2; i <= 5; ++i) {
+    for (int i = 2; i <= 5; ++i) {
         LinkNode* newNode = new LinkNode(i);
         cur->next = newNode;
         cur = newNode;
@@ -41,8 +41,11 @@ int main() {
     LinkNode* res = reverseList(head);
     while (res != nullptr) {
         cout << res->val << " ";
+        LinkNode* temp = res;
         res = res->next;
+        delete temp;
     }
     cout << endl;
+
     return 0;
 }
