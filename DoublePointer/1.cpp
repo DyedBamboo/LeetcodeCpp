@@ -27,4 +27,5 @@ int main() {
     int val = 3;
     int res = removeElement(nums, val);
     cout << res << endl;
+    return 0;
 }
