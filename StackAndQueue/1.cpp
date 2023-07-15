@@ -51,7 +51,6 @@ public:
 
 int main() {
     MyQueue q;
-    q.push(3);
     q.push(1);
     q.push(2);
     cout << q.peek() << endl;
