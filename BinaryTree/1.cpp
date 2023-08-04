@@ -7,6 +7,7 @@
  * @版权声明 RanZhuJun
  */
 #include <iostream>
+#include <stack>
 #include <vector>
 
 using namespace std;
@@ -18,20 +19,50 @@ struct TreeNode {
     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
 };
 
-vector<int> traversal(TreeNode* cur, vector<int> vec) {
-    if (cur == nullptr) {
-        return vec;
-    }
-    vec.push_back(cur->val);
-    vec = traversal(cur->left, vec);
-    vec = traversal(cur->right, vec);
-    return vec;
-}
+/**
+ * @brief 递归解法
+ */
+// vector<int> traversal(TreeNode* cur, vector<int> vec) {
+//     if (cur == nullptr) {
+//         return vec;
+//     }
+//     vec.push_back(cur->val);
+//     vec = traversal(cur->left, vec);
+//     vec = traversal(cur->right, vec);
+//     return vec;
+// }
+// vector<int> preorderTraversal(TreeNode* root) {
+//     vector<int> vec;
+//     vec = traversal(root, vec);
+//     return vec;
+// }
 
+/**
+ * @brief 迭代解法
+ */
 vector<int> preorderTraversal(TreeNode* root) {
-    vector<int> vec;
-    vec = traversal(root, vec);
-    return vec;
+    vector<int> res;
+    stack<TreeNode*> stk;
+    if (root != nullptr)
+        stk.push(root);
+    while (!stk.empty()) {
+        TreeNode* node = stk.top();
+        if (node != nullptr) {
+            stk.pop();
+            if (node->right)
+                stk.push(node->right);
+            if (node->left)
+                stk.push(node->left);
+            stk.push(node);
+            stk.push(nullptr);
+        } else {
+            stk.pop();
+            node = stk.top();
+            stk.pop();
+            res.push_back(node->val);
+        }
+    }
+    return res;
 }
 
 int main() {
