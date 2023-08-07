@@ -3,11 +3,12 @@
  * @author RanZhuJun
  * @date 2023-08-04
  * @brief leetcode 94 二叉树的中序遍历
- * 
+ *
  * @copyright RanZhuJun 2023
- * 
+ *
  */
 #include <iostream>
+#include <stack>
 #include <vector>
 
 using namespace std;
@@ -19,17 +20,48 @@ struct TreeNode {
     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
 };
 
-void traversal(TreeNode* cur, vector<int>& res) {
-    if (cur == nullptr)
-        return;
-    traversal(cur->left, res);
-    res.push_back(cur->val);
-    traversal(cur->right, res);
-}
+/**
+ * @brief 递归解法
+ */
+// void traversal(TreeNode* cur, vector<int>& res) {
+//     if (cur == nullptr)
+//         return;
+//     traversal(cur->left, res);
+//     res.push_back(cur->val);
+//     traversal(cur->right, res);
+// }
 
+// vector<int> inorderTraversal(TreeNode* root) {
+//     vector<int> res;
+//     traversal(root, res);
+//     return res;
+// }
+
+/**
+ * @brief 迭代解法
+ */
 vector<int> inorderTraversal(TreeNode* root) {
     vector<int> res;
-    traversal(root, res);
+    stack<TreeNode*> stk;
+    if (root != nullptr)
+        stk.push(root);
+    while (!stk.empty()) {
+        TreeNode* node = stk.top();
+        if (node != nullptr) {
+            stk.pop();
+            if (node->right)
+                stk.push(node->right);
+            stk.push(node);
+            stk.push(nullptr);
+            if (node->left)
+                stk.push(node->left);
+        } else {
+            stk.pop();
+            node = stk.top();
+            stk.pop();
+            res.push_back(node->val);
+        }
+    }
     return res;
 }
 
