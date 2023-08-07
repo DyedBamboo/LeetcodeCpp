@@ -8,6 +8,7 @@
  */
 #include <iostream>
 #include <vector>
+#include <stack>
 
 using namespace std;
 
@@ -18,16 +19,44 @@ struct TreeNode {
     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
 };
 
-void traversal(TreeNode* cur, vector<int>& res) {
-    if (cur == nullptr) return;
-    traversal(cur->left, res);
-    traversal(cur->right, res);
-    res.push_back(cur->val);
-}
+/**
+ * @brief 递归解法
+ */
+// void traversal(TreeNode* cur, vector<int>& res) {
+//     if (cur == nullptr) return;
+//     traversal(cur->left, res);
+//     traversal(cur->right, res);
+//     res.push_back(cur->val);
+// }
 
+// vector<int> postorderTraversal(TreeNode* root) {
+//     vector<int> res;
+//     traversal(root, res);
+//     return res;
+// }
+
+/**
+ * @brief 迭代解法
+ */
 vector<int> postorderTraversal(TreeNode* root) {
     vector<int> res;
-    traversal(root, res);
+    stack<TreeNode*> stk;
+    if (root != nullptr) stk.push(root);
+    while (!stk.empty()) {
+        TreeNode* node = stk.top();
+        if (node != nullptr) {
+            stk.pop();
+            stk.push(node);
+            stk.push(nullptr);
+            if (node->right) stk.push(node->right);
+            if (node->left) stk.push(node->left);
+        } else {
+            stk.pop();
+            node = stk.top();
+            stk.pop();
+            res.push_back(node->val);
+        }
+    }
     return res;
 }
 
