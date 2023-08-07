@@ -44,6 +44,20 @@ vector<vector<int>> levelOrder2(TreeNode* root) {
     return res;
 }
 
+/**
+ * @brief 手动释放内存
+ *
+ * @param root
+ */
+void releaseMemory(TreeNode* root) {
+    if (root == nullptr) {
+        return;
+    }
+    releaseMemory(root->left);
+    releaseMemory(root->right);
+    delete root;
+}
+
 int main() {
     vector<int> vec = {1, 2, 3, 4, 5, 6, 7};
     TreeNode* root = new TreeNode(vec[0]);
@@ -62,5 +76,6 @@ int main() {
         cout << endl;
     }
     cout << endl;
+    releaseMemory(root);
     return 0;
 }
