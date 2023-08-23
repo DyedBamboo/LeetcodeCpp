@@ -51,6 +51,15 @@ vector<string> binaryTreePaths(TreeNode* root) {
     return result;
 }
 
+void releaseMemory(TreeNode* root) {
+    if (root == nullptr)
+        return;
+    releaseMemory(root->left);
+    releaseMemory(root->right);
+    delete root;
+    root = nullptr;
+}
+
 int main() {
     TreeNode* root = new TreeNode(1);
     root->left = new TreeNode(2);
